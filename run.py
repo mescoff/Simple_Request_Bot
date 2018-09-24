@@ -1,9 +1,9 @@
 import sys
 import json
 import main 
+from helpers import json_handlers
 from components.request import Request
 from components.state import State
-from helper import helper
 
 def test1():
     arg = ' '.join(e for e in sys.argv[1:])
@@ -22,9 +22,9 @@ def test2():
     requests.append(req2)
 
     with open("test.json","w") as f :
-        json.dump(requests,f,cls=helper.ComplexHandler, indent=4)
+        json.dump(requests,f,cls=json_handlers.ComplexHandler, indent=4)
     with open("test.json","r") as f :
-        l = json.load(f, object_hook=helper.obj_decoder)
+        l = json.load(f, object_hook=json_handlers.obj_decoder)
     print(type((l[0].states)[0]))
 
 def test3(arg):

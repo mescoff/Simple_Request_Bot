@@ -1,3 +1,7 @@
+import json
+with open('helpers/response_list.json', 'r') as f:
+    bot_response_dico = json.load(f)
+
 class State:
     """ State """
 
@@ -12,4 +16,4 @@ class State:
         return dico
     
     def to_string(self):
-        pass
+        return str.format("- StateId: {0}\n- Question asked: {1}\n- Your response: {2}", self.state_id, bot_response_dico[self.question_id], self.response)

@@ -7,7 +7,7 @@ class Request:
     Status = StatusTuple(InProgress="In Progress", Done = "Done")
 
     def __init__(self, id, requester, status = Status.InProgress, states = None):
-        #TODO: make this a const (id)
+        #TODO: make this not changeable (id)
         self.request_id = id
         self.requester = requester
         self.status = status

@@ -2,7 +2,7 @@ import json
 import os.path
 from components.request import Request
 from components.state import State
-from helper import helper
+from helpers import helper
 
 requests_file = "data/requests.json"
 
@@ -39,7 +39,7 @@ def run(input):
 
         #query current state
         if requester_message in ["request state","status"]: 
-            return str.format("Current request step: {0}",last_state.__dict__) #do a tostring with more info about state
+            return str.format("Current state of your request:\n{0}",last_state.to_string()) #do a tostring with more info about state
         
         if current_user == current_request.requester:
             if last_state.question_id == "0":

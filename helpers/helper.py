@@ -1,17 +1,23 @@
 import json
+import os
+import helpers.json_handlers as jhandler
 from components.request import Request
 from components.state import State
+
 
 #TODO: requests file per user
 #in Main make switch easier for response
 
+#possible bug here with requests file path depending on where original script is started from
 requests_file = 'data/requests.json'
 
-with open('helper/response_list.json','r') as f:
+script_path = os.path.dirname(os.path.realpath(__file__))
+
+with open(os.path.join(script_path,'response_list.json'),'r') as f:
     bot_response_dico = json.load(f)
-with open('helper/primaryCl.json','r') as f:
+with open(os.path.join(script_path,'primaryCl.json'),'r') as f:
     primary_CL_dico = json.load(f)
-with open('helper/priorities.json','r') as f:
+with open(os.path.join(script_path,'priorities.json'),'r') as f:
     priorities_dico = json.load(f)
 
 def generate_response(last_state, bot_response_id, current_request, requests, requester_response, is_new_request=False):
@@ -23,7 +29,7 @@ def generate_response(last_state, bot_response_id, current_request, requests, re
     #Repush request on stack and save to file
     requests.append(current_request)
     with open(requests_file,'w') as outfile:
-        json.dump(requests,outfile,cls=ComplexHandler,indent=4)
+        json.dump(requests,outfile,cls=jhandler.ComplexHandler,indent=4)
     return bot_response_dico[bot_response_id]
 
 
@@ -44,7 +50,7 @@ def get_requests():
     """Return list of requests [{request1},{request2}]"""
     try:
         with open(requests_file,"r") as f:
-            requests = json.load(f, object_hook=obj_decoder)
+            requests = json.load(f, object_hook=jhandler.obj_decoder)
             return requests
     except TypeError as err:
         print(err)
@@ -61,18 +67,4 @@ def generate_confirmation_script(states):
         return ''.join(resp_list)
     else:
         return str.format("Error. Request has {0} states, but we are expecting 4", len(states))    
-
-
-class ComplexHandler(json.JSONEncoder):
-    #pylint: disable=E0202
-    def default(self,obj):
-        if hasattr(obj,'to_dico'):
-            return obj.to_dico()
-        return json.JSONEncoder.default(self, obj)
-
-def obj_decoder(dico):
-    if '__request__' in dico: 
-        return Request(dico['request_id'], dico['requester'], dico['status'], dico['states'])
-    if '__state__' in dico:
-        return State(dico['state_id'], dico['question_id'], dico['response']) 
-    return dico       
+   
