@@ -1,0 +1,7 @@
+{
+    "0": "Describe your issue if a few words",
+    "1": "Which application is it for? Type app digit here: \n (1)Fits, (2)Ion, (3)Credit",
+    "2": "What's the severity. Type matching digit: \n (1)Low, (2)Medium or (3)High",
+    "3": "Sounds good. Do you confirm the following request? {Yes/y, No/n}",
+    "4": "Registered, give us a few seconds to process your request"
+}
