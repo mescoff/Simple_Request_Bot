@@ -7,7 +7,7 @@ from components.state import State
 
 def test1():
     arg = ' '.join(e for e in sys.argv[1:])
-    message = json.dumps({"FromUser":"manon.escoffier@sgcib.com","Message":arg})
+    message = json.dumps({"FromUser":"manon","Message":arg})
     print(main.run(message))
 
 def test2():
@@ -28,7 +28,7 @@ def test2():
     print(type((l[0].states)[0]))
 
 def test3(arg):
-    message = json.dumps({"FromUser":"manon.escoffier@sgcib.com","Message":arg})
+    message = json.dumps({"FromUser":"manon',"Message":arg})
     print(main.run(message))
 
 if __name__ == "__main__":
